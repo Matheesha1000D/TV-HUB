@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom|end"
+    tools:context=".Navigaton">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.TVHUB.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/ic_launcher_background"
+            app:popupTheme="@style/Theme.TVHUB.PopupOverlay"
+            app:titleTextColor="@color/black"/>
+<!--            app:subtitle="Television HUB"-->
+<!--            app:subtitleTextColor="@color/black"-->
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_navigaton" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="20dp"
+        android:foregroundTintMode="add"
+        app:backgroundTint="@color/green2"
+        app:srcCompat="@drawable/serach" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

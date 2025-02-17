@@ -1,0 +1,21 @@
+<!-- res/layout/hom_category_items.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/green2">
+
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="CATEGORY"
+            android:textStyle="bold"
+            android:fontFamily="@font/kanit_regular"
+            android:textSize="16sp"
+            android:layout_margin="10dp"
+            android:padding="20dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
