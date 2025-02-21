@@ -71,7 +71,7 @@ public class DetailedActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(allProductModel.getImg_url()).into(detailsImage);
             title.setText(allProductModel.getName());
             price.setText("Rs. " + allProductModel.getPrice() + ".00");
-            qty.setText(allProductModel.getQty());
+            qty.setText(allProductModel.getQuantity());
             description.setText(allProductModel.getDescription());
 
             totalPrice = Integer.parseInt(allProductModel.getPrice()) * totalQuantity;
@@ -82,7 +82,7 @@ public class DetailedActivity extends AppCompatActivity {
 
         addItem.setOnClickListener(v -> {
             int quantity = Integer.parseInt(addqty.getText().toString());
-            if (quantity < Integer.parseInt(allProductModel.getQty())) {
+            if (quantity < Integer.parseInt(allProductModel.getQuantity())) {
                 addqty.setText(String.valueOf(quantity + 1));
                 totalQuantity = quantity + 1;
                 totalPrice = Integer.parseInt(allProductModel.getPrice()) * totalQuantity;
@@ -124,6 +124,7 @@ public class DetailedActivity extends AppCompatActivity {
         cartMap.put("productTotalQty", addqty.getText().toString());
         cartMap.put("productImg", allProductModel.getImg_url());
         cartMap.put("productDescription", allProductModel.getDescription());
+        cartMap.put("productStatus", allProductModel.getStatus());
 
         firestore.collection("AddToCart").document(auth.getCurrentUser().getUid())
                 .collection("CurrentUser").add(cartMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {

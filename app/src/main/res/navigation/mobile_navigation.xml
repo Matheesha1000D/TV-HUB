@@ -29,25 +29,6 @@
         tools:layout="@layout/fragment_history" />
 
     <fragment
-        android:id="@+id/nav_myaccount"
-        android:name="lk.javainstitute.tv_hub.ui.MyAccount.AccountFragment"
-        android:label="@string/menu_myaccount"
-        tools:layout="@layout/fragment_account">
-        <action
-            android:id="@+id/action_nav_myaccount_to_nav_updateuser"
-            app:destination="@id/nav_updateuser" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_updateuser"
-        android:name="lk.javainstitute.tv_hub.ui.updateUser.UpdateUserFragment"
-        tools:layout="@layout/fragment_update_user">
-        <action
-            android:id="@+id/action_nav_updateuser_to_nav_myaccount"
-            app:destination="@id/nav_myaccount" />
-    </fragment>
-
-    <fragment
         android:id="@+id/nav_feedback"
         android:name="lk.javainstitute.tv_hub.ui.Feedback.FeedbackFragment"
         android:label="@string/menu_feedback"

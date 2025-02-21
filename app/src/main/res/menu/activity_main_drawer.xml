@@ -21,10 +21,6 @@
             android:icon="@drawable/history"
             android:title="@string/menu_history" />
         <item
-            android:id="@+id/nav_myaccount"
-            android:icon="@drawable/user_pen"
-            android:title="@string/menu_myaccount" />
-        <item
             android:id="@+id/nav_feedback"
             android:icon="@drawable/smile"
             android:title="@string/menu_feedback" />
@@ -36,9 +32,5 @@
             android:id="@+id/nav_aboutus"
             android:icon="@drawable/about_us"
             android:title="@string/menu_aboutus" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/power"
-            android:title="@string/menu_logout" />
     </group>
 </menu>

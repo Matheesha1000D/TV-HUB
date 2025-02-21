@@ -43,6 +43,7 @@ import lk.javainstitute.tv_hub.StartActivity;
 import lk.javainstitute.tv_hub.adapters.MyCartAdapter;
 import lk.javainstitute.tv_hub.models.MyCartModel;
 import lk.javainstitute.tv_hub.ui.Home.HomeFragment;
+import lk.javainstitute.tv_hub.ui.orderDetails.orderDetailsActivity;
 import lk.payhere.androidsdk.PHConfigs;
 import lk.payhere.androidsdk.PHConstants;
 import lk.payhere.androidsdk.PHMainActivity;
@@ -56,29 +57,7 @@ public class CartFragment extends Fragment {
     private static final String TAG = "CartFragment";
     private TextView textView;
 
-    private final ActivityResultLauncher<Intent> payHereLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    // There are no request codes
-                    Intent data = result.getData();
-                    if(data.hasExtra(PHConstants.INTENT_EXTRA_RESULT)){
-                        Serializable serializable = data.getSerializableExtra(PHConstants.INTENT_EXTRA_RESULT);
-                        if(serializable instanceof PHResponse){
-                            PHResponse<StatusResponse> response = (PHResponse<StatusResponse>) serializable;
-                            String msg = response.isSuccess() ? "Payment completed" + response.getData() : "Payment failed"+response;
-                            Log.d(TAG, msg);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("Payment Status");
-                            builder.setMessage(msg);
-                        }
-                    }
-                } else if (result.getResultCode()==Activity.RESULT_CANCELED) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Payment Status");
-                    builder.setMessage("User canceled the payment");
-                }
-            });
+    String totalAmount;
 
     FirebaseFirestore db;
     FirebaseAuth auth;
@@ -95,18 +74,20 @@ public class CartFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+// In CartFragment.java
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root =  inflater.inflate(R.layout.fragment_cart, container, false);
+        View root = inflater.inflate(R.layout.fragment_cart, container, false);
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         recyclerView = root.findViewById(R.id.cart_rec);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        overTotalAmount = root.findViewById(R.id.totalPriceText);
+        overTotalAmount = root.findViewById(R.id.tv_total_price); // Updated ID
         emptyViewImage = root.findViewById(R.id.empty_view_image);
         LocalBroadcastManager.getInstance(getActivity())
                 .registerReceiver(mMessageReceiver, new IntentFilter("MyTotalAmount"));
@@ -171,16 +152,19 @@ public class CartFragment extends Fragment {
             }
         }).attachToRecyclerView(recyclerView);
 
-        Button process= root.findViewById(R.id.process);
-        process.setOnClickListener(view -> initialPayment());
+        Button process = root.findViewById(R.id.process);
+        process.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), orderDetailsActivity.class);
+            intent.putExtra("totalAmount", totalAmount);
+            startActivity(intent);
+        });
 
         return root;
     }
 
     private void toggleEmptyView() {
-
         TextView emptyViewText = getView().findViewById(R.id.textView16);
-        TextView emptyViewText1 = getView().findViewById(R.id.totalPriceText);
+        TextView emptyViewText1 = getView().findViewById(R.id.tv_total_price); // Updated ID
         Button process = getView().findViewById(R.id.process);
         Button button = getView().findViewById(R.id.shop_Now);
 
@@ -188,12 +172,9 @@ public class CartFragment extends Fragment {
             emptyViewImage.setVisibility(View.VISIBLE);
             button.setVisibility(View.VISIBLE);
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(CartFragment.this.getActivity(), Navigaton.class);
-                    startActivity(i);
-                }
+            button.setOnClickListener(view -> {
+                Intent i = new Intent(CartFragment.this.getActivity(), Navigaton.class);
+                startActivity(i);
             });
 
             recyclerView.setVisibility(View.GONE);
@@ -210,42 +191,12 @@ public class CartFragment extends Fragment {
         }
     }
 
-
-    private void initialPayment() {
-        InitRequest req = new InitRequest();
-        req.setMerchantId("1221173");       // Merchant ID
-        req.setCurrency("LKR");             // Currency code LKR/USD/GBP/EUR/AUD
-        req.setAmount(1000);             // Final Amount to be charged
-        req.setOrderId("230000123");        // Unique Reference ID
-        req.setItemsDescription("Door bell wireless");  // Item description title
-        req.setCustom1("This is the custom message 1");
-        req.setCustom2("This is the custom message 2");
-        req.getCustomer().setFirstName("Saman");
-        req.getCustomer().setLastName("Perera");
-        req.getCustomer().setEmail("samanp@gmail.com");
-        req.getCustomer().setPhone("+94771234567");
-        req.getCustomer().getAddress().setAddress("No.1, Galle Road");
-        req.getCustomer().getAddress().setCity("Colombo");
-        req.getCustomer().getAddress().setCountry("Sri Lanka");
-
-//Optional Params
-        req.setNotifyUrl("https://payhere.lk/pay/notify");
-        req.getCustomer().getDeliveryAddress().setAddress("Kurunegala Negombo Road, Narammala");
-        req.getCustomer().getDeliveryAddress().setCity("Narammala");
-        req.getCustomer().getDeliveryAddress().setCountry("Sri Lanka");
-        req.getItems().add(new Item(null, "Door bell wireless", 1, 1000.0));
-
-        Intent intent = new Intent(getActivity(), PHMainActivity.class);
-        intent.putExtra(PHConstants.INTENT_EXTRA_DATA, req);
-        PHConfigs.setBaseUrl(PHConfigs.SANDBOX_URL);
-        payHereLauncher.launch(intent);
-    }
-
     public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int totalAmount = intent.getIntExtra("totalAmount", 0);
-            overTotalAmount.setText("Rs. " + totalAmount + ".00");
+            int totalAmount1 = intent.getIntExtra("totalAmount", 0);
+            totalAmount = String.valueOf(totalAmount1);
+            overTotalAmount.setText(String.valueOf("Rs: " + totalAmount1) + ".00");
         }
     };
 }

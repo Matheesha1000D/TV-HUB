@@ -103,10 +103,10 @@
             android:textAlignment="textEnd"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/totalPriceText"
+            android:id="@+id/tv_total_price"
             android:layout_width="391dp"
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
@@ -121,6 +121,6 @@
             android:text="@string/process"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

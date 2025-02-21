@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/ic_tv_logo" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/nav_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -47,7 +47,7 @@
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/nav_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"

@@ -1,6 +1,7 @@
 package lk.javainstitute.tv_hub.ui.Home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,12 +84,14 @@ public class HomeFragment extends Fragment {
 
 
         db.collection("Products")
+                .whereEqualTo("status", "1")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                              Log.i("Document", String.valueOf(document));
                                 AllProductModel allProductModel = document.toObject(AllProductModel.class);
                                 allProductModelList.add(allProductModel);
                             }

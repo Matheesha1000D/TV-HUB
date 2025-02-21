@@ -3,22 +3,63 @@ package lk.javainstitute.tv_hub.models;
 import java.io.Serializable;
 
 public class AllProductModel implements Serializable {
+    String id;
     String img_url;
     String name;
     String price;
-    String qty;
+    String quantity;
     String description;
+    String category;
+    String createdAt;
+    String status;
 
     public AllProductModel(){
 
     }
 
-    public AllProductModel(String img_url, String name, String price, String qty, String description) {
+    public AllProductModel(String id, String img_url, String name, String price, String quantity, String description, String category, String createdAt, String status) {
+        this.id = id;
         this.img_url = img_url;
         this.name = name;
         this.price = price;
-        this.qty = qty;
+        this.quantity = quantity;
         this.description = description;
+        this.category = category;
+        this.createdAt = createdAt;
+        this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getImg_url() {
@@ -45,12 +86,12 @@ public class AllProductModel implements Serializable {
         this.price = price;
     }
 
-    public String getQty() {
-        return qty;
+    public String getQuantity() {
+        return quantity;
     }
 
-    public void setQty(String qty) {
-        this.qty = qty;
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     public String getDescription() {

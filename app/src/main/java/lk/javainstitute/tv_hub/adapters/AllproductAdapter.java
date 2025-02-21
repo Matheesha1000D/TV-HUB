@@ -7,14 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-
 import java.util.List;
-
 import lk.javainstitute.tv_hub.R;
 import lk.javainstitute.tv_hub.models.AllProductModel;
 import lk.javainstitute.tv_hub.ui.Details.DetailedActivity;
@@ -35,24 +31,26 @@ public class AllproductAdapter extends RecyclerView.Adapter<AllproductAdapter.Vi
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.product_card_item, parent, false));
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(context).load(allProductModelList.get(position).getImg_url()).into(holder.img);
-        holder.name.setText(allProductModelList.get(position).getName());
-        holder.price.setText(allProductModelList.get(position).getPrice());
-        holder.qty.setText(allProductModelList.get(position).getQty());
-        holder.qty.setText(allProductModelList.get(position).getQty());
-        holder.description.setText(allProductModelList.get(position).getDescription());
+   @Override
+   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+       Glide.with(context).load(allProductModelList.get(position).getImg_url()).into(holder.img);
+       holder.name.setText(allProductModelList.get(position).getName());
+       holder.price.setText("Rs. " + allProductModelList.get(position).getPrice() + ".00");
+       holder.qty.setText(allProductModelList.get(position).getQuantity());
+       holder.description.setText(allProductModelList.get(position).getDescription());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, DetailedActivity.class);
-                intent.putExtra("detail", allProductModelList.get(position));
-                context.startActivity(intent);
-            }
-        });
-    }
+       holder.itemView.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               int adapterPosition = holder.getAdapterPosition();
+               if (adapterPosition != RecyclerView.NO_POSITION) {
+                   Intent intent = new Intent(context, DetailedActivity.class);
+                   intent.putExtra("detail", allProductModelList.get(adapterPosition));
+                   context.startActivity(intent);
+               }
+           }
+       });
+   }
 
     @Override
     public int getItemCount() {

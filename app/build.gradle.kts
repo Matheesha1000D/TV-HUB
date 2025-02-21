@@ -68,5 +68,10 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.6.0") // ignore if you have already added
     implementation ("com.google.code.gson:gson:2.8.0") // ignore if you have already added
 
+    implementation ("androidx.biometric:biometric:1.2.0-alpha04")
+
+    implementation ("androidx.core:core:1.7.0")
+    implementation ("androidx.core:core-ktx:1.7.0")
+
 
 }

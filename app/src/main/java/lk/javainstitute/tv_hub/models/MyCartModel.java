@@ -1,6 +1,9 @@
 package lk.javainstitute.tv_hub.models;
 
-public class MyCartModel {
+import java.io.Serializable;
+
+public class MyCartModel implements Serializable {
+    String productId;
     String productName;
     String productPrice;
     String productImg;
@@ -13,7 +16,8 @@ public class MyCartModel {
     public MyCartModel() {
     }
 
-    public MyCartModel(String productName, String productPrice, String productImg, String productDate, String productTime, String productTotalQty, int productTotalPrice, String documentId) {
+    public MyCartModel(String productId,String productName, String productPrice, String productImg, String productDate, String productTime, String productTotalQty, int productTotalPrice, String documentId) {
+        this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productImg = productImg;
@@ -22,6 +26,14 @@ public class MyCartModel {
         this.productTotalQty = productTotalQty;
         this.productTotalPrice = productTotalPrice;
         this.documentId = documentId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getProductName() {
